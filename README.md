@@ -48,7 +48,7 @@ Resultados informados nos testes com a **QCA6174 e a Ath10kMac 0.0.90**:
 | **2,4 GHz** | **32,62 Mbps** | **31,23 Mbps** |
 | **5 GHz** | **275,62 Mbps** | **153,03 Mbps** |
 
-A versão **0.0.91** também foi confirmada em uso com boa velocidade e recuperação após o repouso. Os números da tabela são uma referência da máquina testada; o desempenho depende do sinal, do roteador, do canal e da conexão de internet.
+A versão **0.0.92** também foi confirmada em uso com boa velocidade e recuperação após o repouso. Os números da tabela são uma referência da máquina testada; o desempenho depende do sinal, do roteador, do canal e da conexão de internet.
 
 ### Instalação e uso
 
@@ -169,7 +169,7 @@ Results reported during testing with the **QCA6174 and Ath10kMac 0.0.90**:
 | **2.4 GHz** | **32.62 Mbps** | **31.23 Mbps** |
 | **5 GHz** | **275.62 Mbps** | **153.03 Mbps** |
 
-Version **0.0.91** was also confirmed in use with good speeds and recovery after sleep. The figures in the table are a reference from the tested machine; performance depends on signal strength, the router, the channel, and the internet connection.
+Version **0.0.92** was also confirmed in use with good speeds and recovery after sleep. The figures in the table are a reference from the tested machine; performance depends on signal strength, the router, the channel, and the internet connection.
 
 ### Installation and usage
 

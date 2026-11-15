@@ -79,7 +79,7 @@ bool Ath10kPCIDevice::start(IOService *provider)
     if(auto *timeout=OSDynamicCast(OSNumber,getProperty("Ath10kBeaconTimeoutMs"))){
         const UInt32 value=timeout->unsigned32BitValue();_connection.beaconTimeoutMs=value>=10000 && value<=120000?value:30000;
     }
-    IOLog("Ath10kMac: start v0.0.91 (STA HT/VHT, secure RX and Ethernet traffic)\n");
+    IOLog("Ath10kMac: start v0.0.92 (STA HT/VHT, secure RX and Ethernet traffic)\n");
 
     if (!super::start(provider)) {
         IOLog("Ath10kMac: super::start failed\n");
@@ -124,7 +124,7 @@ bool Ath10kPCIDevice::start(IOService *provider)
     validateRegisterLayer();
     dumpHardwareCandidates();
 
-    // 0.0.91 probes for a device-specific IOMapper, but a null result is valid
+    // 0.0.92 probes for a device-specific IOMapper, but a null result is valid
     // on systems without an iommu-parent. IODMACommand::kMapped is still used
     // with the default/null mapper path, and all potentially double-buffered
     // memory is explicitly synchronized around DMA ownership changes.
@@ -2691,7 +2691,7 @@ void Ath10kPCIDevice::validateRegisterLayer()
     IOLog("Ath10kMac: MMIO layer attached=%s length=0x%llx\n",
           _regs.attached() ? "yes" : "no",
           (unsigned long long)_regs.length());
-    IOLog("Ath10kMac: MMIO policy=QCA6174 Host Interest + board/OTP/WLAN + BMI_DONE + HTC READY + Phase 3 HTC services in 0.0.91\n");
+    IOLog("Ath10kMac: MMIO policy=QCA6174 Host Interest + board/OTP/WLAN + BMI_DONE + HTC READY + Phase 3 HTC services in 0.0.92\n");
 
     if (!_regs.valid32(0))
         IOLog("Ath10kMac: ERROR BAR0 cannot satisfy even a 32-bit MMIO access\n");
@@ -3088,7 +3088,7 @@ bool Ath10kPCIDevice::coldResetTarget()
     }
 
     // Do not issue a target MMIO read here. Linux's cold-reset path also
-    // returns after the second delay; 0.0.91 verifies the released bit only
+    // returns after the second delay; 0.0.92 verifies the released bit only
     // after reacquiring target wake in probeTarget().
     _coldResetSucceeded = true;
     IOLog("Ath10kMac: cold reset pulse COMPLETE; post-reset readback deferred until wake reacquire\n");
@@ -4109,7 +4109,7 @@ bool Ath10kPCIDevice::runCE7DiagnosticReadTest()
         return false;
     }
 
-    // One reusable DMA buffer. 0.0.91 accepts a null device mapper and relies
+    // One reusable DMA buffer. 0.0.92 accepts a null device mapper and relies
     // on IODMACommand::kMapped plus explicit synchronize() calls so internal
     // double-buffering remains coherent with CPU-visible memory.
     if (!_dmaMapperReady) {
@@ -6572,14 +6572,14 @@ bool Ath10kPCIDevice::probeTarget()
         IOLog("Ath10kMac: WMI bootstrap status=%s service-ready=%s safe-reset=%s; inspect WMIRuntimeActive for live receiver\n",
               _wmi.status, _wmi.serviceReady ? "yes" : "no", quiesceOk ? "yes" : "no");
     else if (runtimeOk)
-        IOLog("Ath10kMac: NOTE 0.0.91 Phase 3 step 2 active: HTC reserved control, WMI_CONTROL and HTT_DATA endpoints connected; SETUP_COMPLETE deferred until CE2/WMI RX; data TX disabled\n");
+        IOLog("Ath10kMac: NOTE 0.0.92 Phase 3 step 2 active: HTC reserved control, WMI_CONTROL and HTT_DATA endpoints connected; SETUP_COMPLETE deferred until CE2/WMI RX; data TX disabled\n");
     else if (_htcAttempted && !htcOk)
-        IOLog("Ath10kMac: NOTE 0.0.91 HTC service setup incomplete status=%s; target was safely reset=%s\n",
+        IOLog("Ath10kMac: NOTE 0.0.92 HTC service setup incomplete status=%s; target was safely reset=%s\n",
               _htcStatus, quiesceOk ? "yes" : "no");
     else if (complete)
-        IOLog("Ath10kMac: NOTE 0.0.91 received valid HTC READY then safe reset. Firmware is no longer running; HTC service setup/WMI/HTT and Wi-Fi interface are not active\n");
+        IOLog("Ath10kMac: NOTE 0.0.92 received valid HTC READY then safe reset. Firmware is no longer running; HTC service setup/WMI/HTT and Wi-Fi interface are not active\n");
     else
-        IOLog("Ath10kMac: NOTE 0.0.91 milestone incomplete; inspect Host Interest, board, OTP, WLAN, BOOT/HTC, CE/IRQ runtime and quiesce telemetry\n");
+        IOLog("Ath10kMac: NOTE 0.0.92 milestone incomplete; inspect Host Interest, board, OTP, WLAN, BOOT/HTC, CE/IRQ runtime and quiesce telemetry\n");
 
     return complete;
 }
@@ -7025,7 +7025,7 @@ void Ath10kPCIDevice::publishDiagnosticProperties()
     setProperty("Ath10kOTPMilestoneSucceeded", _otpDownloadSucceeded && _otpExecuteSucceeded &&
                 _otpResultAccepted && (_bmiQuiesceSucceeded || _runtimeActive) && !_dmaQuarantine);
     setProperty("Ath10kBMIDoneSent", _boot.doneSent);
-    setProperty("Ath10kDriverVersion", "0.0.91");
+    setProperty("Ath10kDriverVersion", "0.0.92");
     setProperty("Ath10kHTCAttempted", _htcAttempted);
     setProperty("Ath10kWMIInitStatus",_wmiInit.status);
     setProperty("Ath10kWMIInitSubmitted",_wmiInit.submitted);
