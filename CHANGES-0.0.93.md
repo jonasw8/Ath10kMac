@@ -77,3 +77,9 @@ Check Ath10kDriverVersion, Ath10kBoardLookupStatus, Ath10kRequestedBoardKey, Ath
 
 Removed / Removido:
 - `firmware/prepared/board.bin`
+
+## CI portability correction / Correção de portabilidade do CI
+
+The shared test constants in tests/test_board_flow.cpp are now explicitly marked [[maybe_unused]]. Some board/BMI/IRQ test programs intentionally do not use every mock register. Apple Clang reported eleven such constants under -Werror,-Wunused-const-variable. Compiler strictness is preserved, including -Werror and all existing test assertions.
+
+The fourteen Python tests and six board/PLL/BMI C++ programs pass again locally with GCC 14.2 and ASan/UBSan. Apple Clang is not available in this environment; the next GitHub Actions run provides native verification. Kext runtime code, board selection and driver version are unchanged at 0.0.93.

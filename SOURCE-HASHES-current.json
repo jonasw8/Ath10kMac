@@ -1,7 +1,7 @@
 {
   ".github/workflows/ath10kmac-release.yml": "bac22db8bf55fb38cfcd512f983f86ea298c5fa13afa635a6cdaaa4c27f13052",
   "Ath10kMac.kext/Contents/Info.plist": "9bf7a682e974ba7ca39ba8cd80e1b047c805be1ed3dc38ccbe333fc494e6d911",
-  "CHANGES-0.0.93.md": "9dd2062193fbc257362de7842273ea9784ed9251da6f7b40fa03be4b7d9839c3",
+  "CHANGES-0.0.93.md": "2e121f07ace8a88ac0e3dc59f390625d783e074e8c7633f4e3734db46346e42c",
   "MacKernelSDK/Headers/libkern/crypto/Makefile": "065340b49e4fc6b2ae8e30993a1155dcaeea836972b644fff104e19d499215dd",
   "Makefile": "4c386394eba9f0a85c949d7d91d66f66a3d4a22508a3078178f5d8435e2a6e8e",
   "README.md": "61fec93a75781cd9d85e9193e87e9bf48d52e7e8369b45efad9ba7ed2413b90c",
@@ -70,7 +70,7 @@
   "tests/test_bmi_rom.cpp": "2dd888db8ea136ce1e5e342cd302d1fc295e9e44674edb7717aa9ed094701dbe",
   "tests/test_bmi_transport.cpp": "0b8daa593a944f860dc287e2934ede4c80d3b995cc599631c268fb2a339e16c7",
   "tests/test_board_catalog.cpp": "615c2cb2183671fb274a1ce2b7ee2d5f611e55d98cdeece0779c34331a780151",
-  "tests/test_board_flow.cpp": "a8cb2fa5b77877f42f55254a7edc2bb6a018df4d025e46cf52ef5a8b5bf8f2fe",
+  "tests/test_board_flow.cpp": "7ef1cc534027187f1f7c6e924ef36d457bcd2554673057638519953ff08cacd3",
   "tests/test_boot_flow.cpp": "d0848d9d43a796066ec954fe813bceef8f443021c46f1fb69157b9b87770dc5b",
   "tests/test_channel_switch.cpp": "f3498aaa8ad1d09241b850adff22a43c223a48ec44f2244fcec24038310a56e1",
   "tests/test_connection.cpp": "390fe4e393ac9f4bcff28dc817bd2452a7c576e785c41867c52a0e2d0004d847",
@@ -126,5 +126,6 @@
   "tests/test_wmi_vdev.cpp": "3e3aeec7f9a8f0a0833eecd1d1a0ffd1599d25540ea1e15ee8e2a1c72f8d41b8",
   "tests/wmi_worker_mocks.hpp": "f191af2d2aab764e1532e8678eaa2e492fba3646f90035b764bc655f7e353e4b",
   "validation/board-tests-0.0.93.log": "13ed25ec5253a9923703f26cdc8ba5b267ce6914355a5698e775b8526c6f9b1f",
+  "validation/ci-warning-regressions-0.0.93.log": "ea135dbf26aaa10ee3856b7ba3dcd32ef39f3af2f9dc6574d10a1034c492b992",
   "validation/host-tests-0.0.93.log": "70ab5f42356c136bf87646d36694f351082139b06d82ea351da2aa11fe6bda03"
 }
