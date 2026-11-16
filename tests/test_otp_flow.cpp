@@ -12,12 +12,15 @@ public:
     UInt32 rawResult = 0, replyBytes = 4;
     bool exchangeOK = true;
     unsigned executions = 0;
-    explicit OtpDriver(bool qca9377=false) {
+    explicit OtpDriver(bool qca9377=false, UInt16 subvendor=0, UInt16 subdevice=0) {
         if(qca9377){_deviceId=0x0042;_subsystemVendorId=0x1235;_subsystemId=0x0901;
             _selectedHw=Ath10k::findCandidate(0x0042,1);_bmiTargetVersion=0x05020001;
             _bmiBoardDataAddress=0x401100;}
 
+        if(subvendor){_subsystemVendorId=subvendor;_subsystemId=subdevice;}
         assert(runBMIBoardUploadTest());
+        for(UInt32 i=0;i<payload().kBoardSize;++i)
+            assert(memory[_bmiBoardDataAddress+i]==payload().kBoard[i]);
         _regs.posts = 0;
         _regs.consume = [this]() {
             auto *ring = static_cast<Ath10k::CEDescriptor32 *>(_ceSrcRings[0].virtualAddress());

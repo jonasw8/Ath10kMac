@@ -1,0 +1,123 @@
+UserClient access: local/root, revoked access, transferred port, malformed input, task lifetime passed
+test_explicit_configuration_and_disable (test_connection_config.ConnectionConfigTests.test_explicit_configuration_and_disable) ... ok
+test_invalid_input_does_not_modify_plist (test_connection_config.ConnectionConfigTests.test_invalid_input_does_not_modify_plist) ... ok
+test_control_and_resets_have_bounded_frames (test_kernel_stack.KernelStackTests.test_control_and_resets_have_bounded_frames) ... ok
+test_captured_probe (test_kext_symbols.SymbolTests.test_captured_probe) ... ok
+test_defined_probe_and_kernel_import (test_kext_symbols.SymbolTests.test_defined_probe_and_kernel_import) ... ok
+test_other_weak_and_strong_probe (test_kext_symbols.SymbolTests.test_other_weak_and_strong_probe) ... ok
+test_board2_optional_and_api1_is_chip_specific (test_payload.PayloadTests.test_board2_optional_and_api1_is_chip_specific) ... ok
+test_catalog_aliases_and_unselected_corruption (test_payload.PayloadTests.test_catalog_aliases_and_unselected_corruption) ... ok
+test_exact_not_prefix_match (test_payload.PayloadTests.test_exact_not_prefix_match) ... ok
+test_fallback_rejects_corrupt_container_and_foreign_firmware (test_payload.PayloadTests.test_fallback_rejects_corrupt_container_and_foreign_firmware) ... ok
+test_firmware_rejects_missing_duplicate_codeswap_wrong_ops (test_payload.PayloadTests.test_firmware_rejects_missing_duplicate_codeswap_wrong_ops) ... ok
+test_known_board_hashes (test_payload.PayloadTests.test_known_board_hashes) ... ok
+test_missing_duplicate_wrong_size (test_payload.PayloadTests.test_missing_duplicate_wrong_size) ... ok
+test_otp_feature_bit (test_payload.PayloadTests.test_otp_feature_bit) ... ok
+test_prepare_is_deterministic_and_validates_before_writes (test_payload.PayloadTests.test_prepare_is_deterministic_and_validates_before_writes) ... ok
+test_qca9377_profile (test_payload.PayloadTests.test_qca9377_profile) ... ok
+test_real_inputs (test_payload.PayloadTests.test_real_inputs) ... ok
+test_segmented_image_validation (test_payload.PayloadTests.test_segmented_image_validation) ... ok
+test_skip_clock_feature_bit (test_payload.PayloadTests.test_skip_clock_feature_bit) ... ok
+test_truncated_and_hostile_lengths (test_payload.PayloadTests.test_truncated_and_hostile_lengths) ... ok
+test_both_boards_and_atomic_invalid_input (test_regulatory_config.RegulatoryConfigTests.test_both_boards_and_atomic_invalid_input) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.968s
+
+OK
+Production control/reset paths passed on 16384-byte host thread stack.
+-O0 maximum measured frame: 976 bytes
+Production control/reset paths passed on 16384-byte host thread stack.
+-O2 maximum measured frame: 944 bytes
+Prepared QCA9377/hw1.1: 0 board keys, 1 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+BMI framing tests passed (ASan/UBSan).
+Wake ownership regression passed (actual wake/release methods; already-awake, asleep, MMIO failure and timeout).
+Control API tests passed (production gated handler, lengths, ownership, key reinstall denial and port authorization).
+Recovery/Info API regression passed (actual methods, host mocks; native termination/rematching not exercised).
+Power notification/gate regression passed (actual methods, sleep before PCI off, both wake orders, duplicate events, cancellation, quarantine and notifier removal).
+Production runtime_irq regression passed (ASan/UBSan; host mocks).
+Production rx_reserve regression passed (ASan/UBSan; host mocks).
+Production dma_policy regression passed (ASan/UBSan; host mocks).
+Production rx_rate regression passed (ASan/UBSan; host mocks).
+IRQ fallback passed: actual MSI preference, absent/registration/enable failure to INTx, configuration readback, no source, rollback after filter handoff and bus-master quarantine preserved.
+Production irq_fallback regression passed (ASan/UBSan; host mocks).
+INTx target-init passed: actual wait repeats target mask until READY, masks/clears/flushed handoff, MSI unchanged, failed MMIO, crash and removed-device stops.
+Production target_init_irq regression passed (ASan/UBSan; host mocks).
+PLL passed: actual BMI read/write ABI, 8 efuse crystals for 6174/9377, independent register/RAM vectors, 20 failure stops, bounded timeout, closed-BMI and profile guards.
+Production pll regression passed (ASan/UBSan; host mocks).
+PLL RAM integration passed: original board guard reproduced, actual PLL/helper/BMI send/CE0 used for 6174 and 9377; three exact words before board upload, 14 refusal cases, timeout/doorbell uncertainty and DMA sync failures.
+Production pll_memory regression passed (ASan/UBSan; host mocks).
+Board catalog passed: 114 exact keys (12 variants), Dell/Killer/Lenovo hashes, shared firmware, deduplicated boards, chip fallback and missing-board/ROM guards.
+Production board_catalog regression passed (ASan/UBSan; host mocks).
+Uncached payload fallback passed (actual production DMA helper).
+Regulatory passed: country/EEPROM/environment/band intersection, variable scan lengths, bounded SERVICE_READY parser, serialized domain/power commands and credit failure gates.
+WMI regulatory TLV integration passed: 36-byte prefix and bounded extensions, captured envelope/prefix with synthetic body, short/truncated/duplicate rejection, transactional caps/credits, actual CE2 bootstrap and CE3 INIT.
+SECURITY_IND teardown regression passed: captured 36 bytes, early unmaps, partial/reused peers, NONE/install isolation, credit/STOP/ECHO gates and reconnect without runtime restart.
+CSA passed: AP identity/IE validation, deadline, DMA/credit drain, DOWN/RESTART/UP, response/barrier/beacon gates, preserved WPA2 keys/PN, forbidden moves and failures.
+DMA radio release passed: all five command owners block unverified release, PCI bus master verified, failed disable retains mappings.
+Station maintenance passed: actual serialized PS/power/ECHO, credit/timeout/drain failures, AP watchdog, firmware warning, DFS geometry and multicast subscriptions.
+BMI identity passed: actual GET_TARGET_INFO rejects truncated/zero/wrong QCA9377 identity and transport failure; no board/OTP/firmware writes.
+AP maintenance passed: WMM/EDCA, counter wrap, snapshots/ECHO/credits, ERP/slot/preamble/RTS, SMPS/NSS and transaction drain.
+native QoS retained: unfragmented=17 fragmented=17 expected=17 payload_equal=1
+native QoS stripped: fragmented=17 expected=17 payload_equal=1
+open RX no BA: original + same-sequence Retry delivered=1
+bounded unknown WMI event: accepted, no acknowledgement
+AP Country max=10dBm constraint=3dB: host_limit=14 half-dBm Linux_AP_limit=14 half-dBm
+AP160 primary80: association_width=80 live_beacon_accepted=1 TIM_updated=1
+Firmware memory passed: bounded requests/chunks, count/flags/overflow/overlap rejection, zeroed DMA, INIT wire and reset/quarantine ownership.
+WMI notifications passed: unknown bounded events, atomic credits, temperature, peer kickout, RF-kill and no false command/key acknowledgements.
+Runtime PCIe power passed: idle gates, original ASPM bits, MMIO wake/order/lock race, PM cleanup, all-ones failure and bounded timeout.
+Firmware stats passed: exact Linux records, atomic credits, per-field freshness, request/ECHO ownership and unavailable statistics without false acknowledgement.
+0.0.85 S1-S4 regressions passed: final NSS/OM, peer/BSS bandwidth, CSA Country, raw/native CCMP Retry identity/replay/deadline.
+0.0.86 A1-A7/ECSA/Spectrum passed: initial20/staticSMPS recovery, association/1SS ceilings, group BA isolation, fresh BA epoch, VLAN MTU RX/TX/native/A-MSDU, retained power, key copies, wider AP classes and atomic negative reports.
+0.0.86 runtime passed: Auth/Assoc response and no-ACK retries, bounded 3 attempts, no retry with DMA owned, Spectrum drain/completion/drop without disconnect, terminal CPU wipe with DMA quarantine.
+S5 runtime passed: 2SS restored in host/firmware rate sets only after ECHO; CSA80/OM20 and Country commit preserve keys/PN.
+Reset sequence passed: actual warm reset/probe, one IRQ mask, three CE passes, ROM overwrite recovery, CE/config/CPU/BMI order and failure stops (6174/9377 mocks).
+Capability limits passed: HT=1 max-width=20 max-NSS=1; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=1 max-width=20 max-NSS=2; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=1 max-width=40 max-NSS=1; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=1 max-width=40 max-NSS=2; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=1 max-width=80 max-NSS=1; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=1 max-width=80 max-NSS=2; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+Capability limits passed: HT=0 max-width=80 max-NSS=2; 2.4/5GHz, BSS20, 1SS hardware and AP/firmware ceilings.
+WPA2 supplicant tests passed (independent crypto vectors, MIC, GTK unwrap, retries, RSN mismatch and no key reinstall).
+RX pipeline tests passed (atomic A-MSDU, replay, host/firmware reorder, wrap, gap/fragment timeouts, CCMP defrag, raw decap, 40/80MHz and 1/2SS negotiation).
+Network RX integration passed (actual production methods, FIRST-only Native WiFi metadata, aggregate security/integrity, replay, firmware and host ordering, EAPOL and allocation failure).
+RX security diagnostics passed (all 65536 first-header FC values preserve acceptance; FIRST-only metadata, categorized rejection, no PN commit and no IV export).
+Board flow tests passed (actual method bodies, simulated CE0/ROM, ASan/UBSan).
+OTP flow tests passed (actual method bodies; simulated ROM, no execution of binary).
+WLAN download/readback tests passed (actual methods, simulated ROM and RAM).
+QCA9377 profile/board/OTP/WLAN regressions passed (actual production methods, independent simulated ROM loader).
+BMI transport regression passed (actual method; RX before TX, descriptor-first completion, bounce DMA, timeout, no retry).
+BMI ROM diagnostic passed: bounded response/CE1 reads, candidate identity, address checks, failures, stability, no BMI repost and retention after quiesce.
+HTC READY parser tests passed (bounds, trailers, invalid resources, ASan/UBSan).
+HTC service ABI tests passed (frame builders, responses, endpoint bounds, ASan/UBSan).
+Boot tests passed (actual methods; simulated CE1/firmware/reset, no hardware).
+HTC control/handshake tests passed (actual methods, simulated CE0/CE1, ASan/UBSan).
+WMI bootstrap tests passed (actual CE2 methods, parser, credits and reset ownership).
+WMI INIT tests passed (real CE3 methods, READY and CE1/CE2 credits, reset ownership).
+WMI runtime tests passed (actual receiver/lifecycle methods, simulated CE and worker/PM ordering).
+WMI ECHO tests passed (actual timer, CE3 TX, response correlation, credits and teardown).
+WMI VDEV_CREATE tests passed (actual timer, ECHO gating, CE3 transport, credits and teardown).
+WMI channel-list tests passed (actual timer/CE3, VDEV gating, credits, timeout and teardown).
+WMI START_SCAN tests passed (actual TX/timer, correlated events, transactional credits, timeouts and teardown).
+WMI BSS tests passed (actual receive path, bounded cache, binary SSID, malformed RF and credits).
+WMI radio tests passed (TX/RX ordering, wire ABI, credits, timeout and DMA quarantine).
+WMI channel-info tests passed (38 channels, optional fields, invalid TLVs, transactional credits).
+RX setup tests passed (filter barrier, HTT ABI/version, ring DMA, scan gating, failures and exhaustion).
+HTT ordered RX refill tests passed (completion gating, 2200 cycles, DMA failure and malformed indications).
+Open STA connection and traffic tests passed (actual state machine, simulated CE/WMI/HTT).
+0.0.90 reconnect passed: missing replies roll back; create/delete tracked separately from HTT IDs; credits, SYNC_DELETE, STOP/ECHO and late replies; first MLME reason retained; initial HT rates not reassociated.
+TX watchdog passed: late HTT ownership, progressing traffic, CE stalls, full-queue stalls, bounded pauses, ID retention, wakeup and teardown.
+32-slot connection/traffic and Block ACK tests passed.
+16/32/64-slot connection/traffic regressions passed (64 is default).
+CSA: old cookie=a75c0001 final cookie=a75c0001 phase=9 radio-completed=0 active=1
+Power: committed=20 current-limit=10 blocked=1 step=0 active=1
+Width: AP=80 STA=40 target=40 confirmed=1
+Review regressions passed: CSA response ownership, power changes during ECHO and negotiated width confirmation.

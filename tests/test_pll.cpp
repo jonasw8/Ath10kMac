@@ -6,6 +6,7 @@
 #include "Ath10kPLL.hpp"
 #include "Ath10kHw.hpp"
 #include "Ath10kBMI.hpp"
+#include "Ath10kPayload.hpp"
 static void IOLog(const char *,...){}
 static UInt64 clockUs=0;
 static void IODelay(UInt32 n){clockUs+=n;}
@@ -16,7 +17,13 @@ public:
     bool _bmiGetTargetInfoSucceeded=true,_bmiBoardPrereqSucceeded=true;
     bool _bmiTransferUncertain=false,_dmaQuarantine=false,profileMatches=true;
     UInt32 _bmiWriteMemoryTransactionCount=0;
-    bool payloadMatchesTarget() const {return profileMatches;}
+    UInt16 _vendorId=0x168c,_deviceId=0x0042,_subsystemVendorId=0x17aa,_subsystemId=0x0901;
+    UInt32 _bmiTargetVersion=0x05020001,_bmiTargetType=8,_bmiTargetInfoLength=12;
+    const char *_bmiBoardUploadStatus="not-run";
+    const Ath10kPayload::Profile &payload() const {
+        return Ath10kPayload::selectProfile(_vendorId,_deviceId,_subsystemVendorId,_subsystemId,_selectedHw?_selectedHw->chipRevision:0xff);
+    }
+    bool payloadMatchesTarget() const {return payload().matchesTarget(_bmiTargetVersion,_bmiTargetType,_bmiTargetInfoLength);}
     struct {bool bmiClosed=false;} _boot;
     const Ath10k::HwCandidate *_selectedHw=Ath10k::findCandidate(Ath10k::kQCA9377Device,1);
     Ath10k::PLLState _pll{};std::map<UInt32,UInt32> words;
@@ -49,6 +56,8 @@ int main(){
     const UInt32 expectedDiv[]={14,36,29,27,18,18,18,27};
     for(UInt16 device:{Ath10k::kQCA6174Device,Ath10k::kQCA9377Device})for(UInt8 ref=0;ref<8;++ref){
         Ath10kPCIDevice d;d._selectedHw=Ath10k::findCandidate(device,device==Ath10k::kQCA6174Device?10:1);
+        d._deviceId=device;
+        if(device==Ath10k::kQCA6174Device){d._subsystemVendorId=0x1028;d._subsystemId=0x0310;d._bmiTargetVersion=0x05030000;}
         d.words[0xb2c]=UInt32(ref)<<8;d.words[0xaf4]=0x80000000;d.words[0x1018]=0x80000000;d.words[0x914]=0x80000000;
         d.words[0x1014]=0x80010000;d.words[0x820]=0x80000000;clockUs=0;
         assert(d.configureTargetPLL() && d._pll.complete && d._pll.step==13 && d._pll.reference==ref && d._pll.polls==2);

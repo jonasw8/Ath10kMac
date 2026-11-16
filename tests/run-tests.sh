@@ -51,7 +51,7 @@ echo 'Recovery/Info API regression passed (actual methods, host mocks; native te
 ASAN_OPTIONS=detect_leaks=0 "$test_tmp_dir/power"
 echo 'Power notification/gate regression passed (actual methods, sleep before PCI off, both wake orders, duplicate events, cancellation, quarantine and notifier removal).'
 
-for target in runtime_irq rx_reserve dma_policy rx_rate irq_fallback target_init_irq pll pll_memory; do
+for target in runtime_irq rx_reserve dma_policy rx_rate irq_fallback target_init_irq pll pll_memory board_catalog; do
     "${CXX:-c++}" -std=c++17 -O2 -pthread -Wall -Wextra -Werror -fsanitize=address,undefined \
         -I"$test_tmp_dir" -Isrc/kext "tests/test_${target}.cpp" -o "$test_tmp_dir/$target"
     ASAN_OPTIONS=detect_leaks=0 "$test_tmp_dir/$target"

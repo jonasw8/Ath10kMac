@@ -79,7 +79,7 @@ bool Ath10kPCIDevice::start(IOService *provider)
     if(auto *timeout=OSDynamicCast(OSNumber,getProperty("Ath10kBeaconTimeoutMs"))){
         const UInt32 value=timeout->unsigned32BitValue();_connection.beaconTimeoutMs=value>=10000 && value<=120000?value:30000;
     }
-    IOLog("Ath10kMac: start v0.0.92 (STA HT/VHT, secure RX and Ethernet traffic)\n");
+    IOLog("Ath10kMac: start v0.0.93 (STA HT/VHT, secure RX and Ethernet traffic)\n");
 
     if (!super::start(provider)) {
         IOLog("Ath10kMac: super::start failed\n");
@@ -124,7 +124,7 @@ bool Ath10kPCIDevice::start(IOService *provider)
     validateRegisterLayer();
     dumpHardwareCandidates();
 
-    // 0.0.92 probes for a device-specific IOMapper, but a null result is valid
+    // 0.0.93 probes for a device-specific IOMapper, but a null result is valid
     // on systems without an iommu-parent. IODMACommand::kMapped is still used
     // with the default/null mapper path, and all potentially double-buffered
     // memory is explicitly synchronized around DMA ownership changes.
@@ -2691,7 +2691,7 @@ void Ath10kPCIDevice::validateRegisterLayer()
     IOLog("Ath10kMac: MMIO layer attached=%s length=0x%llx\n",
           _regs.attached() ? "yes" : "no",
           (unsigned long long)_regs.length());
-    IOLog("Ath10kMac: MMIO policy=QCA6174 Host Interest + board/OTP/WLAN + BMI_DONE + HTC READY + Phase 3 HTC services in 0.0.92\n");
+    IOLog("Ath10kMac: MMIO policy=QCA6174 Host Interest + board/OTP/WLAN + BMI_DONE + HTC READY + Phase 3 HTC services in 0.0.93\n");
 
     if (!_regs.valid32(0))
         IOLog("Ath10kMac: ERROR BAR0 cannot satisfy even a 32-bit MMIO access\n");
@@ -3088,7 +3088,7 @@ bool Ath10kPCIDevice::coldResetTarget()
     }
 
     // Do not issue a target MMIO read here. Linux's cold-reset path also
-    // returns after the second delay; 0.0.92 verifies the released bit only
+    // returns after the second delay; 0.0.93 verifies the released bit only
     // after reacquiring target wake in probeTarget().
     _coldResetSucceeded = true;
     IOLog("Ath10kMac: cold reset pulse COMPLETE; post-reset readback deferred until wake reacquire\n");
@@ -4109,7 +4109,7 @@ bool Ath10kPCIDevice::runCE7DiagnosticReadTest()
         return false;
     }
 
-    // One reusable DMA buffer. 0.0.92 accepts a null device mapper and relies
+    // One reusable DMA buffer. 0.0.93 accepts a null device mapper and relies
     // on IODMACommand::kMapped plus explicit synchronize() calls so internal
     // double-buffering remains coherent with CPU-visible memory.
     if (!_dmaMapperReady) {
@@ -5096,7 +5096,7 @@ bool Ath10kPCIDevice::runBMIGetTargetInfoTest()
     _bmiTargetVersion = response.version;
     _bmiTargetType = response.type;
     if(response.length!=sizeof(response) || response.type!=8 || !response.version || response.version==0xffffffffu ||
-       (payload().available && !payloadMatchesTarget())){
+       (payload().hasFirmware() && !payload().matchesFirmwareTarget(response.version,response.type,response.length))){
         IOLog("Ath10kMac: BMI_GET_TARGET_INFO rejected ROM identity len=%u version=0x%08x type=%u; board/OTP/firmware remain blocked\n",
               response.length,response.version,response.type);
         return false;
@@ -5129,7 +5129,8 @@ bool Ath10kPCIDevice::bmiWritePLLWord(UInt32 address,UInt32 value)
         ((_selectedHw->deviceId==Ath10k::kQCA6174Device && _selectedHw->chipRevision==Ath10k::kQCA6174Hw32ChipRev) ||
          (_selectedHw->deviceId==Ath10k::kQCA9377Device && _selectedHw->chipRevision==Ath10k::kQCA9377Hw11ChipRev));
     if(!profile || !_bmiGetTargetInfoSucceeded || !_bmiBoardPrereqSucceeded ||
-       !payloadMatchesTarget() || _boot.bmiClosed || _bmiTransferUncertain || _dmaQuarantine ||
+       !payload().matchesFirmwareTarget(_bmiTargetVersion,_bmiTargetType,_bmiTargetInfoLength) ||
+       _boot.bmiClosed || _bmiTransferUncertain || _dmaQuarantine ||
        !_pll.attempted || _pll.complete)return false;
     const bool parameter=(_pll.step==5 && address==0x404028 && value==1) ||
         (_pll.step==12 && address==0x404020 && value==1) ||
@@ -5146,6 +5147,29 @@ bool Ath10kPCIDevice::bmiWritePLLWord(UInt32 address,UInt32 value)
 bool Ath10kPCIDevice::configureTargetPLL()
 {
     if(!_selectedHw || !_bmiGetTargetInfoSucceeded || !_bmiBoardPrereqSucceeded)return false;
+    // Report missing board data before partially changing any clock register.
+    // Firmware/PLL identity is independent of the board's subsystem identity.
+    if(_selectedHw->targetCpuFrequencyHz){
+        _pll={};
+        const auto &profile=payload();
+        if(!profile.matchesFirmwareTarget(_bmiTargetVersion,_bmiTargetType,_bmiTargetInfoLength)){
+            _pll.status="firmware-profile-mismatch";
+            _bmiBoardUploadStatus=_pll.status;
+            IOLog("Ath10kMac: PLL preflight BLOCKED firmware/chip/ROM mismatch PCI=%04x:%04x subsystem=%04x:%04x ROM=0x%08x\n",
+                _vendorId,_deviceId,_subsystemVendorId,_subsystemId,_bmiTargetVersion);
+            return false;
+        }
+        if(!profile.available){
+            _pll.status="board-profile-not-found";
+            _bmiBoardUploadStatus=_pll.status;
+            IOLog("Ath10kMac: board lookup FAILED PCI=%04x:%04x subsystem=%04x:%04x chip=%u; no exact board-2.bin match or board.bin fallback; PLL not started\n",
+                _vendorId,_deviceId,_subsystemVendorId,_subsystemId,_selectedHw->chipRevision);
+            return false;
+        }
+        IOLog("Ath10kMac: board lookup PASS selection=%s key=%s bytes=%u sha256=%s catalog=%u\n",
+            profile.kBoardSelection,profile.kBoardKey,profile.kBoardSize,
+            profile.kBoardSHA256,profile.kBoardCatalogEntries);
+    }
     const bool ok=Ath10k::configurePLL(_pll,_selectedHw->targetCpuFrequencyHz,
         [this](UInt32 a,UInt32 &v){return bmiReadSOCRegister(a,v);},
         [this](UInt32 a,UInt32 v){return bmiWriteSOCRegister(a,v);},
@@ -5338,8 +5362,14 @@ bool Ath10kPCIDevice::bmiWriteMemory(UInt32 targetAddress, const void *data, UIn
 bool Ath10kPCIDevice::runBMIBoardUploadTest()
 {
     _bmiBoardUploadStatus = "profile-mismatch";
-    // Payload selection requires an allowlisted PCI subsystem, chip and ROM.
-    // The 9377 API1 fallback is explicit; never substitute the 6174 board.
+    // API2 exact/variant selection precedes each chip's own API1 fallback.
+    // Catalog rows are generated from firmware files, never subsystem allowlists.
+    if (!payload().available) {
+        _bmiBoardUploadStatus = payload().hasFirmware() ? "board-profile-not-found" : "firmware-profile-not-found";
+        IOLog("Ath10kMac: board upload BLOCKED %s PCI=%04x:%04x subsystem=%04x:%04x\n",
+              _bmiBoardUploadStatus,_vendorId,_deviceId,_subsystemVendorId,_subsystemId);
+        return false;
+    }
     if (!payloadMatchesTarget()) {
         IOLog("Ath10kMac: board upload BLOCKED: payload/profile mismatch\n");
         return false;
@@ -6572,14 +6602,14 @@ bool Ath10kPCIDevice::probeTarget()
         IOLog("Ath10kMac: WMI bootstrap status=%s service-ready=%s safe-reset=%s; inspect WMIRuntimeActive for live receiver\n",
               _wmi.status, _wmi.serviceReady ? "yes" : "no", quiesceOk ? "yes" : "no");
     else if (runtimeOk)
-        IOLog("Ath10kMac: NOTE 0.0.92 Phase 3 step 2 active: HTC reserved control, WMI_CONTROL and HTT_DATA endpoints connected; SETUP_COMPLETE deferred until CE2/WMI RX; data TX disabled\n");
+        IOLog("Ath10kMac: NOTE 0.0.93 Phase 3 step 2 active: HTC reserved control, WMI_CONTROL and HTT_DATA endpoints connected; SETUP_COMPLETE deferred until CE2/WMI RX; data TX disabled\n");
     else if (_htcAttempted && !htcOk)
-        IOLog("Ath10kMac: NOTE 0.0.92 HTC service setup incomplete status=%s; target was safely reset=%s\n",
+        IOLog("Ath10kMac: NOTE 0.0.93 HTC service setup incomplete status=%s; target was safely reset=%s\n",
               _htcStatus, quiesceOk ? "yes" : "no");
     else if (complete)
-        IOLog("Ath10kMac: NOTE 0.0.92 received valid HTC READY then safe reset. Firmware is no longer running; HTC service setup/WMI/HTT and Wi-Fi interface are not active\n");
+        IOLog("Ath10kMac: NOTE 0.0.93 received valid HTC READY then safe reset. Firmware is no longer running; HTC service setup/WMI/HTT and Wi-Fi interface are not active\n");
     else
-        IOLog("Ath10kMac: NOTE 0.0.92 milestone incomplete; inspect Host Interest, board, OTP, WLAN, BOOT/HTC, CE/IRQ runtime and quiesce telemetry\n");
+        IOLog("Ath10kMac: NOTE 0.0.93 milestone incomplete; inspect Host Interest, board, OTP, WLAN, BOOT/HTC, CE/IRQ runtime and quiesce telemetry\n");
 
     return complete;
 }
@@ -6932,6 +6962,16 @@ void Ath10kPCIDevice::publishDiagnosticProperties()
     setProperty("Ath10kPreparedBoardKey", payload().kBoardKey);
     setProperty("Ath10kPreparedBoardSelection", payload().kBoardSelection);
     setProperty("Ath10kPayloadProfileAvailable", payload().available);
+    setProperty("Ath10kFirmwareProfileAvailable", payload().hasFirmware());
+    setProperty("Ath10kBoardLookupStatus", payload().hasFirmware() ?
+        payload().kBoardSelection : "firmware-profile-not-found");
+    setProperty("Ath10kBoardCatalogEntries", UInt64(payload().kBoardCatalogEntries), 32);
+    setProperty("Ath10kSelectedBoardVariant", payload().kBoardVariant);
+    char requestedBoardKey[128]{};
+    snprintf(requestedBoardKey,sizeof(requestedBoardKey),
+        "bus=pci,vendor=%04x,device=%04x,subsystem-vendor=%04x,subsystem-device=%04x",
+        _vendorId,_deviceId,_subsystemVendorId,_subsystemId);
+    setProperty("Ath10kRequestedBoardKey",requestedBoardKey);
     setProperty("Ath10kPreparedBoardSHA256", payload().kBoardSHA256);
     setProperty("Ath10kPreparedFirmwareVersion", payload().kFirmwareVersion);
     setProperty("Ath10kPreparedFirmwareBytes", (UInt64)payload().kFirmwareSize, 32);
@@ -7025,7 +7065,7 @@ void Ath10kPCIDevice::publishDiagnosticProperties()
     setProperty("Ath10kOTPMilestoneSucceeded", _otpDownloadSucceeded && _otpExecuteSucceeded &&
                 _otpResultAccepted && (_bmiQuiesceSucceeded || _runtimeActive) && !_dmaQuarantine);
     setProperty("Ath10kBMIDoneSent", _boot.doneSent);
-    setProperty("Ath10kDriverVersion", "0.0.92");
+    setProperty("Ath10kDriverVersion", "0.0.93");
     setProperty("Ath10kHTCAttempted", _htcAttempted);
     setProperty("Ath10kWMIInitStatus",_wmiInit.status);
     setProperty("Ath10kWMIInitSubmitted",_wmiInit.submitted);

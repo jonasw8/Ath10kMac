@@ -6,6 +6,7 @@
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/IOMemoryDescriptor.h>
 #include <IOKit/IOMapper.h>
+#include <libkern/c++/OSString.h>
 #include <IOKit/IOWorkLoop.h>
 #include <IOKit/IOTimerEventSource.h>
 #include <IOKit/IOFilterInterruptEventSource.h>
@@ -48,8 +49,12 @@ public:
 
 private:
     const Ath10kPayload::Profile &payload() const {
+        // Optional variant is for OEM designs with several boards under one
+        // subsystem. Ordinary PCI boards need no user configuration.
+        const auto *variant=OSDynamicCast(OSString,getProperty("Ath10kBoardVariant"));
         return Ath10kPayload::selectProfile(_vendorId, _deviceId, _subsystemVendorId,
-            _subsystemId, _selectedHw ? _selectedHw->chipRevision : 0xff);
+            _subsystemId, _selectedHw ? _selectedHw->chipRevision : 0xff,
+            variant ? variant->getCStringNoCopy() : nullptr);
     }
     bool payloadMatchesTarget() const {
         return payload().matchesTarget(_bmiTargetVersion, _bmiTargetType, _bmiTargetInfoLength);

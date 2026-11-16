@@ -1,6 +1,6 @@
 # Save as .github/workflows/ath10kmac-release.yml in the kext repository.
 # The Makefile, src/, scripts/, firmware/, and Ath10kMac.kext/ must be at its root.
-# Push v0.0.91 to release the current source; future tags must match its version.
+# Push v0.0.93 to release the current source; future tags must match its version.
 # Branch pushes, pull requests, and manual branch runs produce build artifacts.
 
 name: Ath10kMac Build and Release
@@ -97,6 +97,11 @@ jobs:
               output.write(f"prerelease={str(prerelease).lower()}\n")
               output.write(f"artifact_name=Ath10kMac-{package_version}-x86_64\n")
           PY
+
+      - name: Test automatic board selection and BMI flow
+        env:
+          CXX: /usr/bin/clang++
+        run: sh tests/run-board-tests.sh
 
       - name: Build and check kext symbols
         run: |

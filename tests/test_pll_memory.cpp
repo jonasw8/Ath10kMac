@@ -44,6 +44,11 @@ int main(){
         d._bmiBoardUploadAttempted=false;
         connectedPLL(d);
     }
+    {Ath10kPCIDevice d;d._subsystemId=0xffff;
+        assert(!d.configureTargetPLL() && !d._pll.attempted && !d._regs.posts);
+        assert(!strcmp(d._pll.status,"board-profile-not-found"));}
+    {Ath10kPCIDevice d;use9377(d);d._subsystemVendorId=0x17aa;connectedPLL(d);}
+    {Ath10kPCIDevice d;d._subsystemVendorId=0x1a56;d._subsystemId=0x143a;connectedPLL(d);}
     for(unsigned fault=0;fault<14;++fault){
         Ath10kPCIDevice d;d._pll.attempted=true;d._pll.step=5;
         UInt32 address=0x404028,value=1;
@@ -53,7 +58,7 @@ int main(){
         case 2:d._boot.bmiClosed=true;break;
         case 3:d._dmaQuarantine=true;break;
         case 4:d._bmiTransferUncertain=true;break;
-        case 5:d._subsystemId=0x0311;break;
+        case 5:d._vendorId=0x1234;break;
         case 6:d._bmiTargetVersion=0x05020001;break;
         case 7:d._selectedHw=nullptr;break;
         case 8:d._selectedHw=Ath10k::findCandidate(0x003e,8);break;

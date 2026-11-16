@@ -21,8 +21,18 @@ struct Profile {
     bool kOTPIgnoreResult=false, kSupportsSkipClockInit=false;
     const FirmwareSegment *kFirmwareSegments=nullptr;
     UInt32 kFirmwareSegmentCount=0, kFirmwareSegmentDataBytes=0, kFirmwareEntryAddress=0;
+    const char *kBoardVariant="";
+    UInt32 kBoardCatalogEntries=0;
+    bool hasFirmware() const {
+        return kFirmware && kFirmwareSize && kOTP && kOTPSize &&
+            kFirmwareSegments && kFirmwareSegmentCount;
+    }
+    bool matchesFirmwareTarget(UInt32 version, UInt32 type, UInt32 bytes) const {
+        return hasFirmware() && version==targetVersion && type==8 && bytes==12;
+    }
     bool matchesTarget(UInt32 version, UInt32 type, UInt32 bytes) const {
-        return available && version==targetVersion && type==8 && bytes==12;
+        return available && kBoard && kBoardSize==8124 &&
+            matchesFirmwareTarget(version,type,bytes);
     }
     bool boardAddressValid(UInt32 address) const {
         if (!available || (address & 3)) return false;
@@ -32,5 +42,11 @@ struct Profile {
         return address>=0x401000u && UInt64(address)+kBoardSize<=0x404000u;
     }
 };
-const Profile &selectProfile(UInt16 vendor, UInt16 device, UInt16 subvendor, UInt16 subdevice, UInt8 chip);
+inline bool boardVariantEqual(const char *a, const char *b) {
+    if (!a || !b) return a==b;
+    while (*a && *a==*b) { ++a; ++b; }
+    return *a==*b;
+}
+const Profile &selectProfile(UInt16 vendor, UInt16 device, UInt16 subvendor,
+    UInt16 subdevice, UInt8 chip, const char *variant=nullptr);
 }

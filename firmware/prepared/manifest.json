@@ -1,10 +1,492 @@
 {
   "profile": "QCA6174/hw3.2",
-  "board_key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=0310",
-  "board_selection": "board-api2-exact",
-  "board_bytes": 8124,
-  "board_sha256": "7b01edabe0fc9071abe4d20c7f336fc5e4dc6e2ed4803df54487eef155b16862",
+  "device": "168c:003e",
+  "chip_revision": 10,
+  "target_version": "0x05030000",
+  "selection_policy": "exact PCI+variant, exact PCI, chip API1 fallback, explicit missing-board error",
+  "board_catalog_entries": 77,
+  "unique_board_payloads": 39,
+  "boards": [
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=045e,subsystem-device=0001",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "021e8011f38f7d72c3a7d0058377ff9c121b3e6b0fbf4233ad7120edc9319cf6"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=0310",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "7b01edabe0fc9071abe4d20c7f336fc5e4dc6e2ed4803df54487eef155b16862"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=0310,variant=DE_08e0",
+      "variant": "DE_08e0",
+      "board_bytes": 8124,
+      "board_sha256": "489e88a8373cfbe78d7996871442d69c1785c528eb215cd2c00e801665722542"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=0310,variant=RV_0519",
+      "variant": "RV_0519",
+      "board_bytes": 8124,
+      "board_sha256": "7724b50fad793355bda5900ecc984baebbd7d899acfe4ac3042415221f953a22"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=0410",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "00fa910be4ef4572286a3e1a3a356bf937945598aeacca8b17261405729cbdc4"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=364a",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "72a69d5c150444669026e8948b2055f127ff6d041835c3e12a674eac6d1ecb96"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1028,subsystem-device=364a,variant=DE_0522",
+      "variant": "DE_0522",
+      "board_bytes": 8124,
+      "board_sha256": "bbda8476acc3b698a775f6d78768abcf458dda70be502caccbb4b17efc721ec5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=86cd",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "70b6a45741428cac50cbbac832d863f11c0be11562cf07e70ff387ffbd503de5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=86e0",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "70b6a45741428cac50cbbac832d863f11c0be11562cf07e70ff387ffbd503de5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=86f8",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=86f9",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=8751",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1043,subsystem-device=8752",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=105b,subsystem-device=e09d",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=105b,subsystem-device=e0a0",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "f862d6518a1762e9d98cc2c0db20c36d118cc7059bbd68d2d56c94d81f3b5d45"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=105b,subsystem-device=e0a2",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=105b,subsystem-device=e0a5",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=105b,subsystem-device=e0a6",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=10cf,subsystem-device=192a",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=10cf,subsystem-device=192b",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0503",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "c4fc3b28ce414d5f2fc62aea3a89b2a9b300c63f9bd96a4d279894c45c3f1c97"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0513",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "c4fc3b28ce414d5f2fc62aea3a89b2a9b300c63f9bd96a4d279894c45c3f1c97"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0513,variant=GO_DUMO",
+      "variant": "GO_DUMO",
+      "board_bytes": 8124,
+      "board_sha256": "3e7a029d8f0b0e808c0cc580120457fa626d2cca7bb6dc725aea4e286a412a7e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0523",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "f862d6518a1762e9d98cc2c0db20c36d118cc7059bbd68d2d56c94d81f3b5d45"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0807",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "4c9b92a20a3f11f025a2ea60b605de1344d9b24e575ad5195ab10fdcdf44bf3c"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0808",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "23e11096f92e17a3a98f5f651f5117a38bab7a0ae5148f051342185b34ba385d"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0818",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0837",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0847",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0857",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "c6fa52307cb485ac400185bcf290fd334def27f65df08cdcfb97fe33cd85fe3a"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=0857,variant=GO_NUWANI",
+      "variant": "GO_NUWANI",
+      "board_bytes": 8124,
+      "board_sha256": "952cc6c78bed3541dcb3822154405830720e3ba18d09ddb09a800810377689f1"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=11ad,subsystem-device=1807",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=412f",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "968e3a8fe226d691f4e5c526e05700ee3519e86237eceedd6f2fd2e85c201ce7"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=4130",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "f862d6518a1762e9d98cc2c0db20c36d118cc7059bbd68d2d56c94d81f3b5d45"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=4131",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "f862d6518a1762e9d98cc2c0db20c36d118cc7059bbd68d2d56c94d81f3b5d45"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=4132",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "f862d6518a1762e9d98cc2c0db20c36d118cc7059bbd68d2d56c94d81f3b5d45"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c135",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e5d7b0e674843d52e412864937e4208fd9525f066a2b2af6cdd19eb60753a10f"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c135,variant=K",
+      "variant": "K",
+      "board_bytes": 8124,
+      "board_sha256": "0952b9a0966c7b5e5f75a9929d497e3feee35dfa54c8e20a3ce7960166028670"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c14f",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "eb85ca4eaf92c205787c66d0879526f0afdfe4549b31d9759db92757bd86157f"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c14f,variant=K",
+      "variant": "K",
+      "board_bytes": 8124,
+      "board_sha256": "c845c1fbd7f5e8170c0b80c3c2a6a957e2940e17dbaeaf30e535c3b74e51412d"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c150",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "c9494ed0eeb5170b78dac6207a8ba53633963d029ce7da338f87e379044dcfac"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144d,subsystem-device=c150,variant=K",
+      "variant": "K",
+      "board_bytes": 8124,
+      "board_sha256": "083a0c5844f885346fff73566d322d080b0bd817a1e7cedebc946548351dff88"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144f,subsystem-device=7143",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=144f,subsystem-device=7144",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=14cd,subsystem-device=9008",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=14cd,subsystem-device=9801",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=14cd,subsystem-device=9802",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=334e",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "1a8d225818b46986fc4f615594fbe448fa820618590d6902c8f844bb37cda667"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3360",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "bb0f8171f783f67a39c3e34c200ba1e5e324f1be579a6ebf39b628421a4241e7"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3361",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3362",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "676672505d3575101360bd05b210fc4be1b3f0a659939ff250477ffe06c6d198"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3363",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "70b6a45741428cac50cbbac832d863f11c0be11562cf07e70ff387ffbd503de5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3366",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "2c72633249e13feb56b1984ff06bbb9c20874293c727fceea4c67997449d4ca3"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3370",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "a6792268ebfd779405f73a81d14667593b6cb1c4287937b72547361a146a145e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=168c,subsystem-device=3371",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "aec1c85301c593e303422cb2f54d27b27eca4efce59f065a127e8fb205233b37"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0827",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "d571e3c059c511ce264a8b92cdd6cb645b7c2512d38e58f7510462f4b90ee9d5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0827,variant=GO_LIARA",
+      "variant": "GO_LIARA",
+      "board_bytes": 8124,
+      "board_sha256": "1b80647207600620262be1191d39c567fa7d1bda3e08c026d5993af0d1e539e9"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0827,variant=GO_TREEYA",
+      "variant": "GO_TREEYA",
+      "board_bytes": 8124,
+      "board_sha256": "872e8e82ed08f46d0f066895a13fcf09eeb378721b03c0a208a5ce1857864b41"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0837",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "ed29987628bae343ac6d7ad9e23b6fdbefb1c48cc96b2547277d395550ec9123"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0847",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "ed29987628bae343ac6d7ad9e23b6fdbefb1c48cc96b2547277d395550ec9123"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=0857",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "ed29987628bae343ac6d7ad9e23b6fdbefb1c48cc96b2547277d395550ec9123"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=1435",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "5bca27da22ffaba05212f43f9e3e1be68c6ff575eb069fe8264f8dbbdbfdf0ea"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=1535",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "70b6a45741428cac50cbbac832d863f11c0be11562cf07e70ff387ffbd503de5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=17aa,subsystem-device=3024",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "968e3a8fe226d691f4e5c526e05700ee3519e86237eceedd6f2fd2e85c201ce7"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a3b,subsystem-device=2260",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=1435",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=143a",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "968e3a8fe226d691f4e5c526e05700ee3519e86237eceedd6f2fd2e85c201ce7"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=1535",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "70b6a45741428cac50cbbac832d863f11c0be11562cf07e70ff387ffbd503de5"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=1535,variant=RV_0519",
+      "variant": "RV_0519",
+      "board_bytes": 8124,
+      "board_sha256": "2add098c4b3eb899fccdede4b31859bfa014cfbfb9a595d6262adabad9e0cd8a"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=1535,variant=RV_0520",
+      "variant": "RV_0520",
+      "board_bytes": 8124,
+      "board_sha256": "7b438c5cc623ebe1edf49c56ad01a8c9f945d47cd503ca5736bec9851939446a"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=1536",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=525a",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=535a",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "e1fb5d5ba69b80a9dff924e1fbf3d6901ff64298c935b5669e1e4d54b15f02ed"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1a56,subsystem-device=535b",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "537a3c0a46da6e394d3f7a8769daacbfaf991b4380ea2c304b3343cf8b6745d4"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1dac,subsystem-device=0258",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "294405b80e9e469422244d2da0b1f6fa6b92f1448d82a509edef806a75ad5652"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1dac,subsystem-device=0259",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "94f69f28b8901bc7e655347decc26d4bb9cd8cd1ec5e60c44a9bdd9a4023017e"
+    },
+    {
+      "key": "bus=pci,vendor=168c,device=003e,subsystem-vendor=1dac,subsystem-device=0261",
+      "variant": "",
+      "board_bytes": 8124,
+      "board_sha256": "968e3a8fe226d691f4e5c526e05700ee3519e86237eceedd6f2fd2e85c201ce7"
+    }
+  ],
+  "excluded_board_keys": [
+    "bus=pci,bmi-chip-id=0,bmi-board-id=1",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_CERISE",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_COZMO",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_DAMU",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_FENNEL",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_FENNEL14",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_JUNIPER",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_KAKADU",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_KATSU",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_KODAMA",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=GO_STERN",
+    "bus=sdio,bmi-chip-id=0,bmi-board-id=4,variant=LE_Krane"
+  ],
   "board_container_sha256": "66e83dde1c9af535df1fcd17c72971a96a263357300e921b358d35a353227d60",
+  "fallback_board_sha256": null,
   "firmware_container_sha256": "04d3bad5efa3f9fbe3ba53fd3e25fa9b0585ed227eea8111303b4e08861f979d",
   "firmware_version": "WLAN.RM.4.4.1-00309-",
   "firmware_bytes": 681821,
@@ -48,6 +530,5 @@
     }
   ],
   "firmware_entry_address": 656384,
-  "firmware_segment_data_bytes": 681749,
-  "runtime_policy": "Host Interest + board + OTP + WLAN readback + BMI_DONE + HTC READY + WMI/HTT runtime; verified reset on failure"
+  "firmware_segment_data_bytes": 681749
 }

@@ -39,7 +39,7 @@ public:
         }
         assert(targetSegments.size() == 6 && entry == 0xa0400);
     }
-    explicit FirmwareDriver(bool qca9377=false) : OtpDriver(qca9377) {
+    explicit FirmwareDriver(bool qca9377=false, UInt16 subvendor=0, UInt16 subdevice=0) : OtpDriver(qca9377,subvendor,subdevice) {
         postVersion=_bmiTargetVersion;
         rawResult = 3; // Preserve the exact OTP result reported on hardware.
         assert(runBMIOtpTest() && _otpResult == 3 && _otpResultIgnored);

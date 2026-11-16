@@ -6,16 +6,39 @@
 
 Ath10kMac é uma extensão de kernel (kext) para macOS, criada para as placas Wi-Fi **Qualcomm Atheros QCA6174 e QCA9377**. O driver foi desenvolvido em C++/IOKit, usando o **ath10k do Linux** como referência para os protocolos, a inicialização do hardware e a comunicação com o firmware.
 
-**A QCA6174 está 100% funcional no notebook utilizado nos testes, incluindo o retorno do sleep (repouso). A QCA9377 não foi testada nesta versão.**
+**A QCA6174 foi confirmada funcional no notebook testado com a versão 0.0.92, incluindo o retorno do repouso. A versão 0.0.93 adiciona seleção automática de board; esta atualização e o funcionamento completo da QCA9377 ainda precisam de validação em hardware.**
 
 ### Compatibilidade
 
 | Placa | Identificação PCI | Situação |
 | --- | --- | --- |
-| **QCA6174** | `168c:003e` | **100% funcional no notebook testado**, com conexão, tráfego em 2,4 GHz e 5 GHz e recuperação após o repouso. |
-| **QCA9377** | `168c:0042` | **Não testada nesta versão.** O código e o firmware estão incluídos, mas o funcionamento ainda precisa ser confirmado em hardware. |
+| **QCA6174** | `168c:003e` | **Validada na 0.0.92 no notebook testado**, com conexão, tráfego em 2,4 GHz e 5 GHz e recuperação após o repouso. A seleção automática da 0.0.93 aguarda teste em hardware. |
+| **QCA9377** | `168c:0042` | **Experimental.** A 0.0.93 corrige a ausência de seleção de board Lenovo `17aa:0901`; inicialização completa, conexão e repouso ainda precisam ser confirmados. |
 
 O projeto tem como alvo o **macOS em computadores Intel (x86_64)**. Os testes atuais foram realizados no **macOS Sequoia**. A confirmação de funcionamento da QCA6174 se refere ao notebook e às redes utilizados nos testes; outras revisões de placa e configurações ainda precisam de relatos da comunidade.
+
+### Seleção automática de board — 0.0.93
+
+A kext seleciona os dados da placa pelo subsistema PCI, sem cadastrar cada fabricante no C++ ou adicionar personalidades ao `Info.plist`. O firmware é escolhido separadamente, pelo chip e revisão de ROM suportados: **QCA6174 hw3.2** e **QCA9377 hw1.1**.
+
+Durante `make kext`, o preparador consulta os arquivos de origem e gera o catálogo que será incluído na kext. Na inicialização, a busca segue esta ordem:
+
+1. Entrada exata de `board-2.bin` com variante OEM, quando `Ath10kBoardVariant` estiver definida na personalidade da kext.
+2. Entrada exata sem variante, usando fabricante, dispositivo e subsistema PCI.
+3. `board.bin` da mesma família, quando o arquivo existir na pasta de origem.
+4. Erro explícito `board-profile-not-found` se nenhum board estiver disponível; o PLL não é iniciado.
+
+O pacote atual inclui **77 chaves PCI de QCA6174** (65 sem variante e 12 variantes OEM opcionais) e **37 de QCA9377**, incluindo Killer `1a56:143a` e Lenovo `17aa:0901`. Isso indica disponibilidade dos dados, não validação de todas essas placas em hardware.
+
+Para atualizar a cobertura, substitua `firmware/board-2.bin` (QCA6174) ou `firmware/QCA9377/hw1.0/board-2.bin` (QCA9377) e recompile. Um `board.bin` opcional deve estar na mesma pasta do respectivo `board-2.bin`. A QCA9377 já inclui esse fallback; a QCA6174 não inclui um fallback genérico. **Um board específico de outro fabricante não deve ser usado como fallback genérico.**
+
+Variantes OEM não são adivinhadas. Chaves que exigem identificação BMI/OTP em vez de subsistema PCI são registradas como excluídas no manifesto gerado. O suporte a outras revisões de chip continua dependendo de firmware e inicialização apropriados.
+
+O IORegistry informa `Ath10kRequestedBoardKey`, `Ath10kPreparedBoardKey`, `Ath10kBoardLookupStatus`, `Ath10kBoardCatalogEntries`, `Ath10kFirmwareProfileAvailable` e `Ath10kSelectedBoardVariant`. Para enviar o diagnóstico:
+
+```sh
+sudo sh scripts/test-qca9377.sh > ~/Desktop/ath10k-board.txt 2>&1
+```
 
 ### Ath10k Connectivity é necessário
 
@@ -127,16 +150,39 @@ Obrigado também a todos que contribuírem com testes, relatos de problemas e me
 
 Ath10kMac is a kernel extension (kext) for macOS, created for **Qualcomm Atheros QCA6174 and QCA9377** Wi-Fi adapters. The driver was developed in C++/IOKit, using **Linux ath10k** as a reference for protocols, hardware initialization, and firmware communication.
 
-**The QCA6174 is 100% functional on the laptop used for testing, including recovery after sleep. The QCA9377 has not been tested with this release.**
+**QCA6174 was confirmed functional on the tested laptop with version 0.0.92, including recovery after sleep. Version 0.0.93 adds automatic board selection; this update and full QCA9377 operation still require hardware validation.**
 
 ### Compatibility
 
 | Adapter | PCI ID | Status |
 | --- | --- | --- |
-| **QCA6174** | `168c:003e` | **100% functional on the tested laptop**, including connection, traffic on 2.4 GHz and 5 GHz, and recovery after sleep. |
-| **QCA9377** | `168c:0042` | **Not tested with this release.** Code and firmware are included, but operation still needs to be confirmed on hardware. |
+| **QCA6174** | `168c:003e` | **Validated with 0.0.92 on the tested laptop**, including connection, traffic on 2.4 GHz and 5 GHz, and recovery after sleep. Automatic selection in 0.0.93 awaits hardware testing. |
+| **QCA9377** | `168c:0042` | **Experimental.** Version 0.0.93 fixes missing board selection for Lenovo `17aa:0901`; full initialization, connection and sleep recovery still require confirmation. |
 
 The project targets **macOS on Intel computers (x86_64)**. Current testing was performed on **macOS Sequoia**. The QCA6174 results apply to the laptop and networks used for testing; other adapter revisions and configurations still need community testing reports.
+
+### Automatic board selection — 0.0.93
+
+The kext selects board data using PCI subsystem identifiers, without adding each manufacturer to C++ or creating separate `Info.plist` personalities. Firmware selection is separate and follows the supported chip/ROM revision: **QCA6174 hw3.2** and **QCA9377 hw1.1**.
+
+During `make kext`, the preparation script reads the source files and generates the catalog embedded in the kext. At startup, selection uses this order:
+
+1. Exact `board-2.bin` entry with an OEM variant, when `Ath10kBoardVariant` is set in the kext personality.
+2. Exact entry without a variant, using PCI vendor, device and subsystem IDs.
+3. The same family's `board.bin`, when present in the source directory.
+4. An explicit `board-profile-not-found` error if no board is available; PLL initialization does not begin.
+
+The current package includes **77 QCA6174 PCI keys** (65 unqualified entries and 12 optional OEM variants) and **37 QCA9377 keys**, including Killer `1a56:143a` and Lenovo `17aa:0901`. These counts describe available data, not hardware validation of every adapter.
+
+To update coverage, replace `firmware/board-2.bin` (QCA6174) or `firmware/QCA9377/hw1.0/board-2.bin` (QCA9377), then rebuild. An optional `board.bin` belongs alongside its family's `board-2.bin`. QCA9377 already includes this fallback; QCA6174 does not include a generic fallback. **Another manufacturer's specific board must not be used as a generic fallback.**
+
+OEM variants are not guessed. Keys requiring BMI/OTP identification instead of PCI subsystem IDs are recorded as excluded in the generated manifest. Other chip revisions still require appropriate firmware and initialization support.
+
+IORegistry exposes `Ath10kRequestedBoardKey`, `Ath10kPreparedBoardKey`, `Ath10kBoardLookupStatus`, `Ath10kBoardCatalogEntries`, `Ath10kFirmwareProfileAvailable` and `Ath10kSelectedBoardVariant`. Collect diagnostics with:
+
+```sh
+sudo sh scripts/test-qca9377.sh > ~/Desktop/ath10k-board.txt 2>&1
+```
 
 ### Ath10k Connectivity is required
 

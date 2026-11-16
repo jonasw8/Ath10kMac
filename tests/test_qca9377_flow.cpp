@@ -5,11 +5,11 @@ int main(){
     assert(p.available && p.targetVersion==0x05020001 && p.kBoardSize==8124);
     assert(!strcmp(p.kBoardSelection,"board-api1-fallback"));
     assert(strcmp(p.kFirmwareVersion,Ath10kPayload::kFirmwareVersion));
-    assert(memcmp(p.kBoard,Ath10kPayload::kBoard,8124));
+    assert(memcmp(p.kBoard,Ath10kPayload::selectProfile(0x168c,0x003e,0x1028,0x0310,10).kBoard,8124));
     assert(p.matchesTarget(0x05020001,8,12));
     for(auto version:{0x05030000u,0x05020000u,0u})assert(!p.matchesTarget(version,8,12));
     assert(!p.matchesTarget(0x05020001,7,12) && !p.matchesTarget(0x05020001,8,8));
-    assert(!Ath10kPayload::selectProfile(0x168c,0x0042,0x1235,0x0902,1).available);
+    assert(Ath10kPayload::selectProfile(0x168c,0x0042,0x1235,0x0902,1).available); // chip API1 fallback
     assert(!Ath10kPayload::selectProfile(0x168c,0x0042,0x1235,0x0901,0).available);
     assert(!Ath10kPayload::selectProfile(0x1234,0x0042,0x1235,0x0901,1).available);
     for(auto addr:{0u,0x400800u,0x400ffcu,0x401001u,0x404000u,0xfffffffcu})assert(!p.boardAddressValid(addr));
@@ -22,8 +22,16 @@ int main(){
         assert(!d.runBMIFirmwareDownloadTest() && !d._fwPostBMIProbeSucceeded && d.reads==0);}
     {FirmwareDriver d(true); d.corruptAddress=0xa0400+26272;
         assert(!d.runBMIFirmwareDownloadTest() && d._fwFailedSegment==5 && !d._fwReadbackSucceeded);}
-    {FirmwareDriver d(true); d._subsystemVendorId=0x17aa;
-        assert(!d.runBMIFirmwareDownloadTest() && d._regs.posts==0);}
+    {FirmwareDriver d(true,0x17aa,0x0901);
+        assert(!strcmp(d.payload().kBoardSelection,"board-api2-exact"));
+        assert(!strcmp(d.payload().kBoardSHA256,"34a25b4120d7c1a9bf9c4136ccf9ce0abe95fd8ab367fe0f1707b1674a8ef673"));
+        assert(d.runBMIFirmwareDownloadTest() && d._fwDownloadSucceeded && d._fwReadbackSucceeded);}
+    {FirmwareDriver d(true,0xbeef,0xcafe);
+        assert(!strcmp(d.payload().kBoardSelection,"board-api1-fallback"));
+        assert(d.runBMIFirmwareDownloadTest() && d._fwReadbackSucceeded);}
+    {FirmwareDriver d(false,0x1a56,0x143a);
+        assert(!strcmp(d.payload().kBoardSelection,"board-api2-exact"));
+        assert(d.runBMIFirmwareDownloadTest() && d._fwReadbackSucceeded);}
     {Ath10kPCIDevice d; d._deviceId=0x0042; d._subsystemVendorId=0x1235; d._subsystemId=0x0901;
         d._selectedHw=Ath10k::findCandidate(0x0042,1); // wrong ROM, no board write
         assert(!d.runBMIBoardUploadTest() && d._regs.posts==0);}

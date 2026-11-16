@@ -1,0 +1,39 @@
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+test_board2_optional_and_api1_is_chip_specific (test_payload.PayloadTests.test_board2_optional_and_api1_is_chip_specific) ... ok
+test_catalog_aliases_and_unselected_corruption (test_payload.PayloadTests.test_catalog_aliases_and_unselected_corruption) ... ok
+test_exact_not_prefix_match (test_payload.PayloadTests.test_exact_not_prefix_match) ... ok
+test_fallback_rejects_corrupt_container_and_foreign_firmware (test_payload.PayloadTests.test_fallback_rejects_corrupt_container_and_foreign_firmware) ... ok
+test_firmware_rejects_missing_duplicate_codeswap_wrong_ops (test_payload.PayloadTests.test_firmware_rejects_missing_duplicate_codeswap_wrong_ops) ... ok
+test_known_board_hashes (test_payload.PayloadTests.test_known_board_hashes) ... ok
+test_missing_duplicate_wrong_size (test_payload.PayloadTests.test_missing_duplicate_wrong_size) ... ok
+test_otp_feature_bit (test_payload.PayloadTests.test_otp_feature_bit) ... ok
+test_prepare_is_deterministic_and_validates_before_writes (test_payload.PayloadTests.test_prepare_is_deterministic_and_validates_before_writes) ... ok
+test_qca9377_profile (test_payload.PayloadTests.test_qca9377_profile) ... ok
+test_real_inputs (test_payload.PayloadTests.test_real_inputs) ... ok
+test_segmented_image_validation (test_payload.PayloadTests.test_segmented_image_validation) ... ok
+test_skip_clock_feature_bit (test_payload.PayloadTests.test_skip_clock_feature_bit) ... ok
+test_truncated_and_hostile_lengths (test_payload.PayloadTests.test_truncated_and_hostile_lengths) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.897s
+
+OK
+Prepared QCA9377/hw1.1: 0 board keys, 1 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Prepared QCA6174/hw3.2: 77 board keys, 39 unique boards, API1 fallback=no; firmware WLAN.RM.4.4.1-00309-
+Prepared QCA9377/hw1.1: 37 board keys, 8 unique boards, API1 fallback=yes; firmware WLAN.TF.2.1-00021-QCARMSWP-1
+Board catalog passed: 114 exact keys (12 variants), Dell/Killer/Lenovo hashes, shared firmware, deduplicated boards, chip fallback and missing-board/ROM guards.
+Board regression passed: board_catalog
+PLL passed: actual BMI read/write ABI, 8 efuse crystals for 6174/9377, independent register/RAM vectors, 20 failure stops, bounded timeout, closed-BMI and profile guards.
+Board regression passed: pll
+PLL RAM integration passed: original board guard reproduced, actual PLL/helper/BMI send/CE0 used for 6174 and 9377; three exact words before board upload, 14 refusal cases, timeout/doorbell uncertainty and DMA sync failures.
+Board regression passed: pll_memory
+Board regression passed: board_flow
+BMI identity passed: actual GET_TARGET_INFO rejects truncated/zero/wrong QCA9377 identity and transport failure; no board/OTP/firmware writes.
+Board regression passed: bmi_identity
+Board regression passed: qca9377_flow
+Automatic board-selection host tests passed; physical hardware was not exercised.
